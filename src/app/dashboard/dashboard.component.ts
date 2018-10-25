@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { of} from 'rxjs'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -10,16 +12,9 @@ export class DashboardComponent implements OnInit {
   searches: any[];
   firstname: string;
   lastname: string;
-  // isFirst: Boolean;
-  // isLast:Boolean;
   isExist: Boolean;
-  constructor(private dashboardService: DashboardService) {
+  constructor(private dashboardService: DashboardService, private db: AngularFireDatabase) {
     this.searches = [];
-    this.firstname = "";
-    this.lastname = "";
-    // this.isFirst = false;
-    // this.isLast = false;
-    this.isExist = false;
   }
 
   searchHistory() {
@@ -28,48 +23,33 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  searchFullName(first: string, last: string) {
-    this.dashboardService.getName(first).then(
-      snapshot=>{
-        let first_names = snapshot.child('first-names');
-        let value = first_names.child(first).val();
-        if(value != null){
-          // this.isFirst = true;
-          // console.log(this.isFirst);
-          this.dashboardService.getName(last).then(
-            snapshot=>{
-              let last_names = snapshot.child('last-names');
-              let value_1 = last_names.child(last).val();
-              if(value_1 != null){
-                this.isExist = true;
-                // console.log(this.isLast);
-                alert(`${first} ${last} is a valid name`);
-              }
-              else {
-                this.isExist = false;
-                // console.log(this.isLast);
-                alert(`${first} ${last} is an invalid name`);
-              }
-            }
-          );
-        }
-        else {
-          this.isExist = false;
-          // console.log(this.lastname);
-          alert(`${first} ${last} is an invalid name`);
-        }
-        console.log(this.isExist);
-      }
-    );
-    // console.log(this.isFirst);
+
+  addName(firstName: string, lastName: string) {
+    this.db.list('names/names/first-names').set(firstName, true);
+    this.db.list('names/names/last-names').set(lastName, true);
+    console.log(firstName + ' ' + lastName + 'added successfully.');
   }
 
-  addTodatabase(first: string, last: string){
-    this.dashboardService.addToDatabase(first, last);
+  searchFullName(firstName: string, lastName: string) {
+    console.log("searching " + firstName + " " + lastName);
+    this.dashboardService.recordSearch(firstName, lastName);
+    this.getName(firstName, lastName).subscribe(isExist => {
+      this.isExist = isExist;
+    });
+  }
+
+  getName(firstName: string, lastName: string) {
+    var fn = this.db.object('names/names/first-names/' + firstName).snapshotChanges();
+    var ln = this.db.object('names/names/last-names/' + lastName).snapshotChanges();
+
+    return fn.switchMap(fn1 => 
+      ln.switchMap(ln1 => {
+        return of((fn1.payload.val() === true) && (ln1.payload.val() === true));
+      })
+    );
   }
   
   ngOnInit() {
-    // this.dashboardService.getFirstname();
   }
 
 }

@@ -51,8 +51,7 @@ export class LoginService {
         const sessionKey = this.db.database
                         .ref(`sessions`)
                         .push({
-                          userUid: auth.user.uid,
-                          time: createdAt
+                          userUid: auth.user.uid
                         }).key;
 
         const sessionPayload: any = {
@@ -76,11 +75,4 @@ export class LoginService {
     this.afAuth.auth.signOut();
     this.router.navigate(['/']);
   }
-
-
-  createFullnameList(){
-    
-  }
-
-
 }

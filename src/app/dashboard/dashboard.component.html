@@ -9,6 +9,17 @@
     <input type="text" class="form-control" id="lastname" name="lastname" required [(ngModel)]="lastname_input">
   </div>
 
-  <button type="submit" class="btn btn-success" [disabled] = "isExist">Add Name</button>
+  <!-- <button type="submit" class="btn btn-success" [disabled] = "isExist">Add Name</button> -->
   <button type="submit" class="btn btn-success" (click)="searchFullName(firstname_input,lastname_input)">Search Full nName</button>
 </form>
+
+<div [ngSwitch]="isExist">
+    <div *ngSwitchCase="true">
+      <div>{{firstname_input}} {{lastname_input}} is a valid name.</div>
+    </div>
+    <div *ngSwitchCase="false">
+      <div>{{firstname_input}} {{lastname_input}} is not a valid name.
+          <button (click)="addName(firstname_input,lastname_input)">ADD NAME</button>
+      </div>
+    </div>
+</div>    

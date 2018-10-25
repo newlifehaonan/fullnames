@@ -14,13 +14,8 @@ export class HistoryComponent implements OnInit {
 
   constructor(private dashboardServices: DashboardService) { 
     this.dashboardServices.getSearchHistory().subscribe(
-      item =>{
-        console.log(item);
-        // let temp = new user(<string>item.userUid, <number>item.time)
-        // console.log(temp);
-        this.history_list.push(
-          item
-        );
+      items =>{
+        this.history_list = items;
       }
     );
   }
