@@ -1,3 +1,21 @@
-<p>
-  dashboard works!
-</p>
+<form>
+  <div class="form-group">
+    <label for="firstname">First Name</label>
+    <input type="text" class="form-control" id="firstname" name="firstname" required [(ngModel)]="firstname_input">
+  </div>
+
+  <div class="form-group">
+    <label for="lastname">Lastname</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" required [(ngModel)]="lastname_input">
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled] = "isExist">Add Name</button>
+  <button type="submit" class="btn btn-success" (click)="searchFullName(firstname_input,lastname_input)">Search Full nName</button>
+</form>
+<!-- <h1 *ngIf = "isExist">
+  {{firstname_input}} {{lastname_input}} is a valid name
+</h1>
+
+<h1 *ngIf = "!isExist">
+    {{firstname_input}} {{lastname_input}} is not a valid name
+</h1> -->

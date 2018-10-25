@@ -12,7 +12,6 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class LoginService {
   authState: Observable<{} | null>;
-
   user: Observable<{} | null>;
   userUid: string;
   constructor(
@@ -52,7 +51,8 @@ export class LoginService {
         const sessionKey = this.db.database
                         .ref(`sessions`)
                         .push({
-                          userUid: auth.user.uid
+                          userUid: auth.user.uid,
+                          time: createdAt
                         }).key;
 
         const sessionPayload: any = {
@@ -76,4 +76,11 @@ export class LoginService {
     this.afAuth.auth.signOut();
     this.router.navigate(['/']);
   }
+
+
+  createFullnameList(){
+    
+  }
+
+
 }
