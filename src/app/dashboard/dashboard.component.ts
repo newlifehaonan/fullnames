@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
 
 
   addName(firstName: string, lastName: string) {
-    this.db.list('names/names/first-names').set(firstName, true);
-    this.db.list('names/names/last-names').set(lastName, true);
+    this.db.list('names/first-names').set(firstName, true);
+    this.db.list('names/last-names').set(lastName, true);
     console.log(firstName + ' ' + lastName + 'added successfully.');
   }
 
@@ -39,8 +39,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getName(firstName: string, lastName: string) {
-    var fn = this.db.object('names/names/first-names/' + firstName).snapshotChanges();
-    var ln = this.db.object('names/names/last-names/' + lastName).snapshotChanges();
+    var fn = this.db.object('names/first-names/' + firstName).snapshotChanges();
+    var ln = this.db.object('names/last-names/' + lastName).snapshotChanges();
 
     return fn.switchMap(fn1 => 
       ln.switchMap(ln1 => {
