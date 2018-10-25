@@ -62,70 +62,12 @@ export class DashboardComponent implements OnInit {
       }
     );
     // console.log(this.isFirst);
+  }
 
-  //   this.dashboardService.getName(last).then(
-  //     snapshot=>{
-  //       let last_names = snapshot.child('last-names');
-  //       let value = last_names.child(last).val();
-  //       if(value != null){
-  //         this.isLast = true;
-  //         // console.log(this.isLast);
-  //       }
-  //       else {
-  //         this.isLast = false;
-  //         // console.log(this.isLast);
-  //       }
-  //     }
-  //   );
-  //   console.log(this.isLast);
-
-  //   if(this.isFirst && this.isLast){
-  //     console.log('exit');
-  //   }
-  //   else {
-  //     console.log('not exit');
-  //   }
-  // }
-
-  // searchFirstName(first: string){
-  //   this.dashboardService.getName(first).then(
-  //     snapshot=>{
-  //       let first_names = snapshot.child('first-names');
-  //       let value = first_names.child(first).val();
-  //       if(value != null){
-  //         this.isFirst = true;
-  //         console.log(this.isFirst);
-  //         return true;
-  //       }
-  //       else {
-  //         this.isFirst = false;
-  //         console.log(this.lastname);
-  //         return false;
-  //       }
-  //     }
-  //   );
-  // }
-
-
-  // searchLastName(last: string){
-  //   this.dashboardService.getName(last).then(
-  //     snapshot=>{
-  //       let last_names = snapshot.child('last-names');
-  //       let value = last_names.child(last).val();
-  //       if(value != null){
-  //         this.isLast = true;
-  //         console.log(this.isLast);
-  //         return true;
-  //       }
-  //       else {
-  //         this.isLast = false;
-  //         console.log(this.isLast);
-  //         return false;
-  //       }
-  //     }
-  //   );
-  // }
-}
+  addTodatabase(first: string, last: string){
+    this.dashboardService.addToDatabase(first, last);
+  }
+  
   ngOnInit() {
     // this.dashboardService.getFirstname();
   }
